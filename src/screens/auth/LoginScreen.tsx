@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { Ionicons } from '@expo/vector-icons'
 import { login as loginUser } from '../../services/auth.service'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const loginSchema = z.object({
   email: z.string().email('Email no válido'),
@@ -31,15 +32,24 @@ export default function LoginScreen() {
     defaultValues: { email: '', password: '' }
   })
 
-  const onSubmit = async (data: LoginForm) => {
-    try {
-      await loginUser({ email: data.email, password: data.password })
-      navigation.replace('Home')
-    } catch (err: any) {
-      const msg = err?.response?.data?.error || err?.message || 'Error al iniciar sesión'
-      Alert.alert('❌ Error', msg)
-    }
+ const onSubmit = async (data: LoginForm) => {
+  try {
+    // Llamamos al servicio de login y obtenemos el token
+    const response = await loginUser({
+      email: data.email,
+      password: data.password
+    })
+    const { token } = response   // response debe ser { message: string; token: string }
+    // Guardamos el token en AsyncStorage
+    await AsyncStorage.setItem('token', token)
+
+    // Navegamos a la pantalla Home
+    navigation.replace('Home')
+  } catch (err: any) {
+    const msg = err?.response?.data?.error || err?.message || 'Error al iniciar sesión'
+    Alert.alert('❌ Error', msg)
   }
+}
 
   return (
     <KeyboardAvoidingView
