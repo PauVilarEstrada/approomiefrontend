@@ -5,22 +5,36 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "jsEngine": "jsc",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "ios": {
-      "supportsTablet": true
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "updates": {
+      "enabled": false
     },
     "android": {
+      "package": "com.buscoroomie",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCcwJZfLlKscV2Ihh5zST6DVGKy_wPFHH8"
+        },
+        "permissions": ["ACCESS_NETWORK_STATE"]
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
+    },
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyCcwJZfLlKscV2Ihh5zST6DVGKy_wPFHH8"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
